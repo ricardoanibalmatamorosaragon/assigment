@@ -18,8 +18,8 @@ services:
      source:/prometheus/prometheus.yml
      #volumes:
       #     - volume_pro:/etc/prometheus/prometheus.yml
-     target: [sito:80] 
-     restart :alaways
+     target:"sito:80"
+     restart:alaways
      ports:
        - "9090:9090"
    sito:
