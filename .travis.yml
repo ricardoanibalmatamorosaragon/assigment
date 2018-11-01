@@ -8,10 +8,10 @@ language: bash
 before_script:
     - docker version
     - docker-compose version
-  
-script:
     - docker-compose pull
     - docker-compose up -d
+  
+script:
     - docker ps
     - docker network ls
     - docker volume ls
