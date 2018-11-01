@@ -13,7 +13,15 @@ services:
        - MYSQL_PASSWORD=abc123
      networks:
        - BackEnd
- 
+   prometheus:
+     image:prom/prometheus:v2.5.0-rc.2
+     source:/prometheus/prometheus.yml
+     volumes:
+       - volume_pro:/etc/prometheus/prometheus.yml
+     target: [sito:80] 
+     restart :alaways
+     ports:
+       - "9090:9090"
    sito:
      depends_on:
        - database
