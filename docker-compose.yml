@@ -16,8 +16,8 @@ services:
    prometheus:
      image:prom/prometheus:v2.5.0-rc.2
      source:/prometheus/prometheus.yml
-     volumes:
-           - volume_pro:/etc/prometheus/prometheus.yml
+     #volumes:
+      #     - volume_pro:/etc/prometheus/prometheus.yml
      target: [sito:80] 
      restart :alaways
      ports:
@@ -43,7 +43,7 @@ services:
 volumes:
     volume_database:
     volume_sito:
-    volume_pro:
+    #volume_pro:
  
 networks:
     FrontEnd:
