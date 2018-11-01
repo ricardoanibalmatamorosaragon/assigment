@@ -43,6 +43,7 @@ services:
 volumes:
     volume_database:
     volume_sito:
+    volume_pro:
  
 networks:
     FrontEnd:
