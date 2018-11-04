@@ -22,6 +22,7 @@ services:
         - 9090:9090
      volumes:
       # - ./prometheus/:/etc/prometheus/ # map path where yalm file for prom is stored
+       - volume_prometheus:/etc/prometheus/
        - volume_pro:/var/lib/prometheus  # where store data
      command:
        - --config.file=/etc/prometheus/prometheus.yml
@@ -70,6 +71,7 @@ volumes:
     volume_sito:
     grafana_data: {}
     volume_pro: {}
+    volume_prometheus:
 
     #volume_pro:
  
