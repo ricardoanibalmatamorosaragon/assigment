@@ -21,7 +21,7 @@ services:
      ports:
         - 9090:9090
      volumes:
-       - ./prometheus/:/etc/prometheus/ # map path where yalm file for prom is stored
+      # - ./prometheus/:/etc/prometheus/ # map path where yalm file for prom is stored
        - volume_pro:/var/lib/prometheus  # where store data
      command:
        - --config.file=/etc/prometheus/prometheus.yml
