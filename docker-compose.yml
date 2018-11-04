@@ -13,13 +13,25 @@ services:
        - MYSQL_PASSWORD=abc123
      networks:
        - BackEnd
+       
+       
    prometheus:
      image: prom/prometheus:v2.5.0-rc.2
      source:/prometheus/prometheus.yml
-     target: "sito:80"
-     restart: alaways
      ports:
-       - "9090:9090"
+       - 9090:9090
+     volumes:
+       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+       - prometheus_data:/etc/prometheus/
+       - prometheus_data:/prometheus
+     command:
+       - "--config.file=/etc/prometheus/prometheus.yml"
+       - "--storage.tsdb.path=/prometheus"
+       - "--web.console.libraries=/etc/prometheus/console_libraries"
+       - "--web.console.templates=/etc/prometheus/consoles"
+       - "--storage.tsdb.retention=200h"
+       - "--web.enable-lifecycle"
+
    sito:
      depends_on:
        - database
@@ -37,10 +49,29 @@ services:
      networks:
        - FrontEnd
        - BackEnd
+       
+   grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    volumes:
+       - grafana_data:/var/lib/grafana
+    environment:
+       - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
+       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+       - GF_USERS_ALLOW_SIGN_UP=false
+    restart: unless-stopped
+    expose:
+       - 3000
+    ports:
+       - 3000:3000
+
 
 volumes:
     volume_database:
     volume_sito:
+    grafana_data: {}
+    prometheus_data: {}
+
     #volume_pro:
  
 networks:
