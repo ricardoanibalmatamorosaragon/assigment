@@ -18,10 +18,11 @@ services:
    prometheus:
      #image: prom/prometheus:v2.5.0-rc.2
      image: prom/prometheus:latest
-     build:
-     context: ./prometheus
-     dockerfile: Dockerfile
-
+   #  build:
+    # context: ./prometheus
+    # dockerfile: Dockerfile
+     expose:
+       - 9090
      ports:
         - 9090:9090
      volumes:
