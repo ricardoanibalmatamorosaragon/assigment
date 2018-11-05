@@ -18,18 +18,16 @@ services:
        
        
    prometheus:
-     #image: prom/prometheus:v2.5.0-rc.2
      image: prom/prometheus:latest
      expose:
-       - 9090
+        - 9090
      ports:
         - 9090:9090
      volumes:
        - volume_prometheus:/etc/prometheus/prometheus.yml
-      # - volume_pro:/var/lib/prometheus  # where store data
-      # - volume_pro:/prometheus
+       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
      command:
-       - --config.file=/etc/prometheus/prometheus.yml
+       - '--config.file=/etc/prometheus/prometheus.yml'
      links:
        - exporter
 
