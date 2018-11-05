@@ -26,8 +26,8 @@ services:
         - 9090:9090
      volumes:
        - volume_prometheus:/etc/prometheus/prometheus.yml
-       - volume_pro:/var/lib/prometheus  # where store data
-       - volume_pro:/prometheus
+      # - volume_pro:/var/lib/prometheus  # where store data
+      # - volume_pro:/prometheus
      command:
        - --config.file=/etc/prometheus/prometheus.yml
      links:
