@@ -24,9 +24,9 @@ services:
      expose:
        - 9090
      volumes:
-       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-       - prometheus_data:/etc/prometheus/
-       - prometheus_data:/prometheus
+       - volume_pro1:/etc/prometheus/	       
+       - volume_pro:/var/lib/prometheus  # where store data	       
+       - volume_pro:/prometheus
        
      command:
        - "--config.file=/etc/prometheus/prometheus.yml"
@@ -88,7 +88,8 @@ volumes:
     volume_database:
     volume_sito:
    # grafana_data: {}
-    prometheus_data: {}
+    volume_pro:
+    volume_pro1:
  
 networks:
     FrontEnd:
