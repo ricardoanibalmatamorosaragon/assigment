@@ -25,15 +25,9 @@ scrape_configs:
     # scheme defaults to 'http'.
 
     static_configs:
-      - targets: ["prometheus:9090"]
+      - targets: ["localhost:9090"]
 
- # - job_name: 'sito'
-         # metrics_path defaults to '/metrics'
-         # scheme defaults to 'http'.
-
-    #static_configs:
-     # - targets: ['192.168.99.100:80']
-  - job_name: 'database'
-    static_configs:
-      - targets: ['exporter:9104']
+ # - job_name: 'database'
+  #  static_configs:
+   #   - targets: ['exporter:9104']
 
