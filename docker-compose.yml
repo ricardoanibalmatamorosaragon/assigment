@@ -1,0 +1,42 @@
+version: '3'
+ 
+services:
+   database:
+     image: mariadb:10.0.29
+     volumes:
+       - volume_database:/var/lib/mysql
+     restart: always
+     environment:
+       - MYSQL_ROOT_PASSWORD=abc123
+       - MYSQL_DATABASE=sito
+       - MYSQL_USER=user_sito
+       - MYSQL_PASSWORD=abc123
+     networks:
+       - BackEnd
+ 
+   sito:
+     depends_on:
+       - database
+     image: wordpress:4.7.2-apache
+     ports:
+       - "80:80"
+     restart: always
+     volumes:
+           - volume_sito:/var/www/html
+     environment:
+       - WORDPRESS_DB_HOST=database
+       - WORDPRESS_DB_NAME=sito
+       - WORDPRESS_DB_USER=user_sito
+       - WORDPRESS_DB_PASSWORD=abc123
+     networks:
+       - FrontEnd
+       - BackEnd
+volumes:
+    volume_database:
+    volume_sito:
+ 
+networks:
+    FrontEnd:
+      driver: bridge
+    BackEnd:
+      driver: bridge
