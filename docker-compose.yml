@@ -20,26 +20,16 @@ services:
    prometheus:
      #image: prom/prometheus:v2.5.0-rc.2
      image: prom/prometheus:latest
-   #  build:
-    # context: ./prometheus
-    # dockerfile: Dockerfile
      expose:
        - 9090
      ports:
         - 9090:9090
      volumes:
-     # - ./prometheus/:/etc/prometheus/ # map path where yalm file for prom is stored
        - volume_prometheus:/etc/prometheus/prometheus.yml
        - volume_pro:/var/lib/prometheus  # where store data
-       #- volume_pro:/prometheus
      command:
        - --config.file=/etc/prometheus/prometheus.yml
-      # - "--storage.tsdb.path=/prometheus"
-      # - "--web.console.libraries=/etc/prometheus/console_libraries"
-     #  - "--web.console.templates=/etc/prometheus/consoles"
-      # - "--storage.tsdb.retention=200h"
-      # - "--web.enable-lifecycle"
-      links:
+     links:
        - exporter
 
    sito:
@@ -84,12 +74,10 @@ services:
     ports: 
       - "9104:9104"
     links:
-      - mysql
+      - database
     environment:
        DATA_SOURCE_NAME: "user_sito:abc123@(database:3306)/mariadb"
     command: '--collect.global_variables --collect.slave_status --collect.binlog_size --collect.info_schema.innodb_metrics --collect.auto_increment.columns --collect.engine_tokudb_status --collect.info_schema.userstats --collect.info_schema.innodb_tablespaces --collect.info_schema.tablestats --collect.info_schema.tables --collect.info_schema.query_response_time --collect.info_schema.processlist --collect.perf_schema.eventsstatements --collect.perf_schema.indexiowaits --collect.perf_schema.tableiowaits --collect.perf_schema.tablelocks --collect.perf_schema.file_events --collect.perf_schema.eventswaits'
-
-
 
 
 volumes:
