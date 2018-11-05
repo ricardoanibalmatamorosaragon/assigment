@@ -19,7 +19,6 @@ services:
        
    prometheus:
      image: prom/prometheus:v2.5.0-rc.2
-     source:/prometheus/prometheus.yml
      ports:
        - 9090:9090
      expose:
