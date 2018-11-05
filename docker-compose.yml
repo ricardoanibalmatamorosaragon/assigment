@@ -18,16 +18,23 @@ services:
        
        
    prometheus:
-     image: prom/prometheus:latest
-     expose:
-        - 9090
+     image: prom/prometheus:v2.5.0-rc.2
+     source:/prometheus/prometheus.yml
      ports:
-        - 9090:9090
+       - 9090:9090
+       
      volumes:
-       - volume_prometheus:/etc/prometheus/prometheus.yml
        - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+       - prometheus_data:/etc/prometheus/
+       - prometheus_data:/prometheus
+       
      command:
-       - '--config.file=/etc/prometheus/prometheus.yml'
+       - "--config.file=/etc/prometheus/prometheus.yml"
+       - "--storage.tsdb.path=/prometheus"
+       - "--web.console.libraries=/etc/prometheus/console_libraries"
+       - "--web.console.templates=/etc/prometheus/consoles"
+       - "--storage.tsdb.retention=200h"
+       - "--web.enable-lifecycle"
     # links:
       # - exporter
 
@@ -81,8 +88,7 @@ volumes:
     volume_database:
     volume_sito:
    # grafana_data: {}
-    volume_pro: {}
-    volume_prometheus:
+    prometheus_data: {}
  
 networks:
     FrontEnd:
