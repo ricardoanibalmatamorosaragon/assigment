@@ -11,6 +11,8 @@ services:
        - MYSQL_DATABASE=sito
        - MYSQL_USER=user_sito
        - MYSQL_PASSWORD=abc123
+     ports:
+       - "3306:3306"
      networks:
        - BackEnd
        
@@ -27,20 +29,18 @@ services:
         - 9090:9090
      volumes:
      # - ./prometheus/:/etc/prometheus/ # map path where yalm file for prom is stored
-       - volume_prometheus:/etc/prometheus/
+       - volume_prometheus:/etc/prometheus/prometheus.yml
        - volume_pro:/var/lib/prometheus  # where store data
-       - volume_pro:/prometheus
+       #- volume_pro:/prometheus
      command:
        - --config.file=/etc/prometheus/prometheus.yml
-       - "--storage.tsdb.path=/prometheus"
-       - "--web.console.libraries=/etc/prometheus/console_libraries"
-       - "--web.console.templates=/etc/prometheus/consoles"
-       - "--storage.tsdb.retention=200h"
-       - "--web.enable-lifecycle"
-
-     depends_on:
-       - cadvisor
-
+      # - "--storage.tsdb.path=/prometheus"
+      # - "--web.console.libraries=/etc/prometheus/console_libraries"
+     #  - "--web.console.templates=/etc/prometheus/consoles"
+      # - "--storage.tsdb.retention=200h"
+      # - "--web.enable-lifecycle"
+      links:
+       - exporter
 
    sito:
      depends_on:
@@ -65,11 +65,12 @@ services:
      image: grafana/grafana:latest
      volumes:
        - grafana_data:/var/lib/grafana
+       - ./grafana/provisioning/:/etc/grafana/provisioning/
      environment:
        - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-user}
        - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-user}
        - GF_USERS_ALLOW_SIGN_UP=false
-     restart: unless-stopped
+     restart: always
      expose:
        - 3000
      ports:
@@ -77,18 +78,17 @@ services:
      #depends_on:
       # - prometheus
        
-   cadvisor:
-     image: google/cadvisor:latest
-     container_name: cadvisor
-     ports:
-       - 7070:8080
-     volumes:
-       - /:/rootfs:ro
-       - /var/run:/var/run:rw
-       - /sys:/sys:ro
-       - /var/lib/docker/:/var/lib/docker:ro
-     depends_on:
-       - database
+ exporter:
+    image: prom/mysqld-exporter
+    restart: always
+    ports: 
+      - "9104:9104"
+    links:
+      - mysql
+    environment:
+       DATA_SOURCE_NAME: "user_sito:abc123@(database:3306)/mariadb"
+    command: '--collect.global_variables --collect.slave_status --collect.binlog_size --collect.info_schema.innodb_metrics --collect.auto_increment.columns --collect.engine_tokudb_status --collect.info_schema.userstats --collect.info_schema.innodb_tablespaces --collect.info_schema.tablestats --collect.info_schema.tables --collect.info_schema.query_response_time --collect.info_schema.processlist --collect.perf_schema.eventsstatements --collect.perf_schema.indexiowaits --collect.perf_schema.tableiowaits --collect.perf_schema.tablelocks --collect.perf_schema.file_events --collect.perf_schema.eventswaits'
+
 
 
 
