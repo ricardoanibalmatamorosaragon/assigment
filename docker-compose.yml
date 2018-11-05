@@ -28,8 +28,8 @@ services:
        - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
      command:
        - '--config.file=/etc/prometheus/prometheus.yml'
-     links:
-       - exporter
+    # links:
+      # - exporter
 
    sito:
      depends_on:
