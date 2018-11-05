@@ -29,7 +29,7 @@ services:
      # - ./prometheus/:/etc/prometheus/ # map path where yalm file for prom is stored
        - volume_prometheus:/etc/prometheus/
        - volume_pro:/var/lib/prometheus  # where store data
-       - prometheus_pro:/prometheus
+       - volume_pro:/prometheus
      command:
        - --config.file=/etc/prometheus/prometheus.yml
        - "--storage.tsdb.path=/prometheus"
