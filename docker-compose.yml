@@ -17,26 +17,6 @@ services:
        - BackEnd
        
        
-   prometheus:
-     image: prom/prometheus:v2.5.0-rc.2
-     ports:
-       - 9090:9090
-     expose:
-       - 9090
-     volumes:
-       - volume_pro1:/etc/prometheus/prometheus.yml	       
-       - volume_pro:/var/lib/prometheus  # where store data	       
-       - volume_pro:/prometheus
-       
-     command:
-       - "--config.file=/etc/prometheus/prometheus.yml"
-       - "--storage.tsdb.path=/prometheus"
-       - "--web.console.libraries=/etc/prometheus/console_libraries"
-       - "--web.console.templates=/etc/prometheus/consoles"
-       - "--storage.tsdb.retention=200h"
-       - "--web.enable-lifecycle"
-    # links:
-      # - exporter
 
    sito:
      depends_on:
@@ -56,40 +36,11 @@ services:
        - FrontEnd
        - BackEnd
        
-  # grafana:
-  #   container_name: grafana
-    # image: grafana/grafana:latest
-     # volumes:
-    #   - grafana_data:/var/lib/grafana
-    #   - ./grafana/provisioning/:/etc/grafana/provisioning/
-    # environment:
-    #   - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-user}
-    #   - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-user}
-    #   - GF_USERS_ALLOW_SIGN_UP=false
-    # restart: always
-     #expose:
-     #  - 3000
-     #ports:
-      #  - 3000:3000
-       
- #  exporter:
- #    image: prom/mysqld-exporter
-  #   restart: always
-  #   ports: 
-   #    - "9104:9104"
-   #  links:
-    #   - database
-    # environment:
-     #   DATA_SOURCE_NAME: "user_sito:abc123@(database:3306)/mariadb"
-     #command: '--collect.global_variables --collect.slave_status --collect.binlog_size --collect.info_schema.innodb_metrics --collect.auto_increment.columns --collect.engine_tokudb_status --collect.info_schema.userstats --collect.info_schema.innodb_tablespaces --collect.info_schema.tablestats --collect.info_schema.tables --collect.info_schema.query_response_time --collect.info_schema.processlist --collect.perf_schema.eventsstatements --collect.perf_schema.indexiowaits --collect.perf_schema.tableiowaits --collect.perf_schema.tablelocks --collect.perf_schema.file_events --collect.perf_schema.eventswaits'
-
+ 
 
 volumes:
     volume_database:
     volume_sito:
-   # grafana_data: {}
-    volume_pro:
-    volume_pro1:
  
 networks:
     FrontEnd:
