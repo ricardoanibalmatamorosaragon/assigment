@@ -77,7 +77,7 @@ services:
 volumes:
     volume_database:
     volume_sito:
-    grafanadata:
+    #grafanadata:
     prometheusdata:
  
 networks:
