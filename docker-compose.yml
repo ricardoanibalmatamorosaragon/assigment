@@ -24,7 +24,7 @@ services:
      expose:
        - 9090
      volumes:
-       - volume_pro1:/etc/prometheus/	       
+       - volume_pro1:/etc/prometheus/prometheus.yml	       
        - volume_pro:/var/lib/prometheus  # where store data	       
        - volume_pro:/prometheus
        
