@@ -49,7 +49,7 @@ services:
        - FrontEnd
        - BackEnd
        
-   grafana:
+  """ grafana:
      container_name: grafana
      image: grafana/grafana:latest
      volumes:
@@ -75,7 +75,7 @@ services:
      environment:
         DATA_SOURCE_NAME: "user_sito:abc123@(database:3306)/mariadb"
      command: '--collect.global_variables --collect.slave_status --collect.binlog_size --collect.info_schema.innodb_metrics --collect.auto_increment.columns --collect.engine_tokudb_status --collect.info_schema.userstats --collect.info_schema.innodb_tablespaces --collect.info_schema.tablestats --collect.info_schema.tables --collect.info_schema.query_response_time --collect.info_schema.processlist --collect.perf_schema.eventsstatements --collect.perf_schema.indexiowaits --collect.perf_schema.tableiowaits --collect.perf_schema.tablelocks --collect.perf_schema.file_events --collect.perf_schema.eventswaits'
-
+"""
 
 volumes:
     volume_database:
