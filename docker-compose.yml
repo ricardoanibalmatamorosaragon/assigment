@@ -34,7 +34,7 @@ services:
 volumes:
     volume_database:
     volume_sito:
-    volume_prova:
+   # volume_prova:
  
 networks:
     FrontEnd:
